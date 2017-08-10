@@ -10,13 +10,9 @@ import com.idoctors.services.ClientService;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-	
-	private ClientRepository clientRepository;
-	
+
 	@Autowired
-	public ClientServiceImpl(ClientRepository clientRepository) {
-		this.clientRepository = clientRepository;
-	}
+	private ClientRepository clientRepository;
 	
 	@Override
 	public Client registerNewClientAccount(Client client) {
