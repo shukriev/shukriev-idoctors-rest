@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -30,9 +30,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.idoctors.controllers.DoctorController;
 import com.idoctors.domain.Doctor;
 import com.idoctors.services.DoctorService;
+import com.idoctors.test.configuration.TestConfiguration;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
+@ContextConfiguration(classes = { TestConfiguration.class })
 public class DoctorControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
@@ -54,7 +56,7 @@ public class DoctorControllerTest {
 		List<Doctor> doctors = Arrays.asList(new Doctor(1, "Shukri", "Shukriev", "shukri@shukriev.com"), new Doctor(2, "Shukri2", "Shukriev2", "shukri2@shukriev.com"));
 		
 		when(doctorService.listAllDoctors()).thenReturn(doctors);
-		
+		System.out.println("----------------------------");
 		mockMvc.perform(get("/doctor"))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -66,6 +68,8 @@ public class DoctorControllerTest {
 			.andExpect(jsonPath("$[0].firstName", is("Shukri2")))
 			.andExpect(jsonPath("$[0].lastName", is("Shukriev2")))
 			.andExpect(jsonPath("$[0].email", is("shukri2@shukriev.com")));
+		System.out.println("----------------------------1");
+		
 		verify(doctorService, times(1)).listAllDoctors();
 		verifyNoMoreInteractions(doctorService);
 

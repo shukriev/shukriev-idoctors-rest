@@ -20,8 +20,6 @@ import javax.persistence.Table;
 
 import com.idoctors.models.Role;
 
-
-
 @Entity
 @Table(name = "clients")
 public class Client {

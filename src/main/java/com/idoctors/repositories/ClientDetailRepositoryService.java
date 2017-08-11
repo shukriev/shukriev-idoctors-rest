@@ -13,12 +13,8 @@ import com.idoctors.models.ClientSocialDetails;
 
 
 public class ClientDetailRepositoryService implements UserDetailsService{
-	private ClientRepository clientRepository;
-	
 	@Autowired
-	public ClientDetailRepositoryService(ClientRepository clientRepository) {
-		this.clientRepository = clientRepository;
-	}
+	private ClientRepository clientRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

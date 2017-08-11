@@ -39,8 +39,7 @@ public class DoctorController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<DoctorResource>> getAllDoctors(){
-		List<DoctorResource> doctorsResource = doctorResourceAssembler.toResources(doctorService.listAllDoctors());
-		
+		List<DoctorResource> doctorsResource = doctorResourceAssembler.toResources(doctorService.listAllDoctors());		
 		return new ResponseEntity<List<DoctorResource>>(doctorsResource, HttpStatus.OK);
 	}	
 	
