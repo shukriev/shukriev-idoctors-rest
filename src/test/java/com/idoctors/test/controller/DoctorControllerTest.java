@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
@@ -48,6 +49,7 @@ public class DoctorControllerTest {
     	mockMvc = MockMvcBuilders.standaloneSetup(doctorController).build();
     }
     
+    @Test
 	public void testGetAllDoctorsSuccessfully() throws Exception {
 		List<Doctor> doctors = Arrays.asList(new Doctor(1, "Shukri", "Shukriev", "shukri@shukriev.com"), new Doctor(2, "Shukri2", "Shukriev2", "shukri2@shukriev.com"));
 		

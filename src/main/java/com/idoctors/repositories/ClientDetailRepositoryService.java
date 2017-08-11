@@ -4,6 +4,7 @@
  */
 package com.idoctors.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,9 +13,9 @@ import com.idoctors.models.ClientSocialDetails;
 
 
 public class ClientDetailRepositoryService implements UserDetailsService{
-	
 	private ClientRepository clientRepository;
 	
+	@Autowired
 	public ClientDetailRepositoryService(ClientRepository clientRepository) {
 		this.clientRepository = clientRepository;
 	}

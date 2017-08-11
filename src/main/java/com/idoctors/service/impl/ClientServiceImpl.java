@@ -10,7 +10,6 @@ import com.idoctors.services.ClientService;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-	
 	private ClientRepository clientRepository;
 	
 	@Autowired
