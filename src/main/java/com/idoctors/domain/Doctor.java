@@ -48,6 +48,7 @@ public class Doctor {
 	}
 
 	public Doctor(Integer id, String firstName, String lastName, String email) {
+		setId(id);
 		setFirstName(firstName);
 		setLastName(lastName);
 		setEmail(email);
