@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.controllers;
 
 import org.springframework.web.bind.annotation.RestController;

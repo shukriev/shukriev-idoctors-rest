@@ -1,10 +1,13 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.services;
 
 import com.idoctors.domain.Doctor;
 
 public interface DoctorService {
 	
-	Iterable<Doctor> listAllDoctors();
+	Iterable<Doctor> findAllDoctors();
 
 	Doctor getDoctorById(Integer id);
 

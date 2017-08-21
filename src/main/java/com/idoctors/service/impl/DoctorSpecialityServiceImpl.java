@@ -1,34 +1,41 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.service.impl;
+
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.idoctors.domain.DoctorEducation;
-import com.idoctors.repositories.DoctorEducationRepository;
-import com.idoctors.services.DoctorEducationService;
+import com.idoctors.domain.DoctorSpeciality;
+import com.idoctors.repositories.DoctorSpecialityRepository;
+import com.idoctors.services.DoctorSpecialityService;
 
 @Service
-public class DoctorEducationServiceImpl implements DoctorEducationService {
+public class DoctorSpecialityServiceImpl implements DoctorSpecialityService {
 
 	@Autowired
-	private DoctorEducationRepository repository;
-	
+	private DoctorSpecialityRepository doctorEducationRepository;
+
 	@Override
-	public Iterable<DoctorEducation> listAllniversities() {
-		return repository.findAll();
+	public DoctorSpeciality getDoctorEducationByDoctorId(Integer doctorId) {
+		return doctorEducationRepository.findOne(doctorId);
 	}
 
 	@Override
-	public DoctorEducation getDoctorEducationByDoctorId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DoctorSpeciality> findAllDoctorEducationByDoctorId(Integer doctorId) {
+		return doctorEducationRepository.findAllDoctorEducationByDoctorId(doctorId);
 	}
 
 	@Override
-	public DoctorEducation saveDoctor(DoctorEducation doctorEducation) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteDoctorEducationById(Integer id) {
+		doctorEducationRepository.delete(id);
 	}
 
-
+	@Override
+	public DoctorSpeciality saveDoctorEducation(DoctorSpeciality doctorEducation) {
+		return doctorEducationRepository.save(doctorEducation);
+	}
 }

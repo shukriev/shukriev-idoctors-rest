@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.resources.assemblers;
 
 import org.springframework.hateoas.Link;

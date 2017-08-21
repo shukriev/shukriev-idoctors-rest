@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,7 @@ public class DoctorServiceImpl implements DoctorService {
 	private DoctorRepository doctorRepository;
 
 	@Override
-	public Iterable<Doctor> listAllDoctors() {
+	public Iterable<Doctor> findAllDoctors() {
 		return doctorRepository.findAll();
 	}
 

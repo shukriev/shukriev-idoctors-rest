@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors;
 
 import org.springframework.boot.SpringApplication;

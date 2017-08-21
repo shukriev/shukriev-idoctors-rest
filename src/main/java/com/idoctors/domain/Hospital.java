@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.domain;
 
 import javax.persistence.Column;

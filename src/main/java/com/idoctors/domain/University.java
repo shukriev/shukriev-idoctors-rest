@@ -20,7 +20,7 @@ public class University {
 	private String name;
 	
 	@OneToOne(mappedBy = "university")
-	private DoctorEducation doctorEducation;
+	private DoctorSpeciality doctorEducation;
 
 	public int getId() {
 		return id;
@@ -38,11 +38,11 @@ public class University {
 		this.name = name;
 	}
 
-	public DoctorEducation getDoctorEducation() {
+	public DoctorSpeciality getDoctorEducation() {
 		return doctorEducation;
 	}
 
-	public void setDoctorEducation(DoctorEducation doctorEducation) {
+	public void setDoctorEducation(DoctorSpeciality doctorEducation) {
 		this.doctorEducation = doctorEducation;
 	}
 

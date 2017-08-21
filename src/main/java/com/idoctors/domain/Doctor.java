@@ -1,3 +1,7 @@
+/**
+ * @author Shukri Shukriev
+ *
+ */
 package com.idoctors.domain;
 
 import java.util.Set;
@@ -39,7 +43,7 @@ public class Doctor {
 	private String email;
 
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-	private Set<DoctorEducation> doctorEducation;
+	private Set<DoctorSpeciality> doctorEducation;
 
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
 	private Set<DoctorWorkSchedule> doctorWorkSchedule;
@@ -86,11 +90,11 @@ public class Doctor {
 		this.email = email;
 	}
 
-	public Set<DoctorEducation> getDoctorEducation() {
+	public Set<DoctorSpeciality> getDoctorEducation() {
 		return doctorEducation;
 	}
 
-	public void setDoctorEducation(Set<DoctorEducation> doctorEducation) {
+	public void setDoctorEducation(Set<DoctorSpeciality> doctorEducation) {
 		this.doctorEducation = doctorEducation;
 	}
 
@@ -107,4 +111,52 @@ public class Doctor {
 		return "Doctor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", doctorEducation=" + doctorEducation + ", doctorWorkSchedule=" + doctorWorkSchedule + "]";
 	}
+	
+	public static Builder getBuilder() {
+		
+		return new Builder();
+	}
+	
+	public static class Builder {
+		private Doctor doctor;
+		
+		public Builder() {
+			doctor = new Doctor();
+		}
+		
+		public Builder id(Integer id) {
+			doctor.setId(id);
+			return this;
+		}
+		
+		public Builder firstName(String firstName) {
+			doctor.setFirstName(firstName);
+			return this;
+		}
+		
+		public Builder lastName(String lastName) {
+			doctor.setLastName(lastName);
+			return this;
+		}
+		
+		public Builder email(String email) {
+			doctor.setEmail(email);
+			return this;
+		}
+		
+		public Builder doctorEducation(Set<DoctorSpeciality> doctorEducation) {
+			doctor.setDoctorEducation(doctorEducation);
+			return this;
+		}
+		
+		public Builder doctorWorkSchedule(Set<DoctorWorkSchedule> doctorWorkSchedule) {
+			doctor.setDoctorWorkSchedule(doctorWorkSchedule);
+			return this;
+		}
+		
+		public Doctor build() {
+			return doctor;
+		}
+	}
+	
 }

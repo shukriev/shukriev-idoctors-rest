@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.services;
 
 import com.idoctors.domain.Hospital;

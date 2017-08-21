@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.service.impl;
 
 import com.idoctors.domain.Speciality;

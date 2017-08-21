@@ -1,12 +1,20 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.services;
 
-import com.idoctors.domain.DoctorEducation;
+import java.util.List;
+import java.util.Set;
 
-public interface DoctorEducationService {
+import com.idoctors.domain.DoctorSpeciality;
+
+public interface DoctorSpecialityService {
 	
-	Iterable<DoctorEducation> listAllniversities();
-
-	DoctorEducation getDoctorEducationByDoctorId(Integer id);
-
-	DoctorEducation saveDoctor(DoctorEducation doctorEducation);
+	DoctorSpeciality getDoctorEducationByDoctorId(Integer doctorId);
+	
+	List<DoctorSpeciality> findAllDoctorEducationByDoctorId(Integer doctorId);
+	
+	void deleteDoctorEducationById(Integer id);
+	
+	DoctorSpeciality saveDoctorEducation(DoctorSpeciality doctorEducation);
 }

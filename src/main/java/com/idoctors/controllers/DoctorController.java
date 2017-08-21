@@ -1,5 +1,7 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.controllers;
-
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.idoctors.domain.Doctor;
+import com.idoctors.domain.DoctorSpeciality;
 import com.idoctors.resources.DoctorResource;
 import com.idoctors.resources.assemblers.DoctorResourceAssembler;
 import com.idoctors.services.DoctorService;
@@ -39,7 +42,7 @@ public class DoctorController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<DoctorResource>> getAllDoctors(){
-		List<DoctorResource> doctorsResource = doctorResourceAssembler.toResources(doctorService.listAllDoctors());		
+		List<DoctorResource> doctorsResource = doctorResourceAssembler.toResources(doctorService.findAllDoctors());		
 		return new ResponseEntity<List<DoctorResource>>(doctorsResource, HttpStatus.OK);
 	}	
 	
@@ -110,6 +113,14 @@ public class DoctorController {
 		logger.info("Doctor with id {} has been updated", id);
 		DoctorResource doctorResource = doctorResourceAssembler.toResource(currentDoctor);
 		return new ResponseEntity<DoctorResource>(doctorResource, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "{id}/education", method =  RequestMethod.GET)
+	public ResponseEntity<List<DoctorSpeciality>> findAllDoctorEducation(@PathVariable Integer id) {
+		logger.info("Find all doctor educations");
+		List<DoctorSpeciality> doctorEducations = null;
+		return new ResponseEntity<List<DoctorSpeciality>>(doctorEducations, HttpStatus.OK);
+
 	}
 	
 	

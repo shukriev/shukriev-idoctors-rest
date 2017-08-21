@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.domain;
 
 import javax.persistence.Column;
@@ -20,7 +23,7 @@ public class Speciality {
 	private String name;
 
 	@OneToOne(mappedBy = "speciality")
-	private DoctorEducation doctorEducation;
+	private DoctorSpeciality doctorEducation;
 
 	public int getId() {
 		return id;
@@ -38,11 +41,11 @@ public class Speciality {
 		this.name = name;
 	}
 
-	public DoctorEducation getDoctorEducation() {
+	public DoctorSpeciality getDoctorEducation() {
 		return doctorEducation;
 	}
 
-	public void setDoctorEducation(DoctorEducation doctorEducation) {
+	public void setDoctorEducation(DoctorSpeciality doctorEducation) {
 		this.doctorEducation = doctorEducation;
 	}
 

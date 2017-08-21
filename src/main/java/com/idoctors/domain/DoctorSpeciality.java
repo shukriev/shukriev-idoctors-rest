@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.domain;
 
 import javax.persistence.CascadeType;
@@ -13,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "doctor_speciality")
-public class DoctorEducation {
+public class DoctorSpeciality {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

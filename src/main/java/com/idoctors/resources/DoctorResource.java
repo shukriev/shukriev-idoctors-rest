@@ -1,3 +1,6 @@
+/**
+ * @author Shukri Shukriev
+**/
 package com.idoctors.resources;
 
 import java.util.Set;
@@ -8,7 +11,7 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
 import com.idoctors.domain.Doctor;
-import com.idoctors.domain.DoctorEducation;
+import com.idoctors.domain.DoctorSpeciality;
 import com.idoctors.domain.DoctorWorkSchedule;
 
 @Relation(value="doctor", collectionRelation="doctors")
@@ -17,7 +20,7 @@ public class DoctorResource extends ResourceSupport {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Set<DoctorEducation> doctorEducation;
+	private Set<DoctorSpeciality> doctorEducation;
 	private Set<DoctorWorkSchedule> doctorWorkSchedule;
 
 	public String getFirstName() {
@@ -38,10 +41,10 @@ public class DoctorResource extends ResourceSupport {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Set<DoctorEducation> getDoctorEducation() {
+	public Set<DoctorSpeciality> getDoctorEducation() {
 		return doctorEducation;
 	}
-	public void setDoctorEducation(Set<DoctorEducation> doctorEducation) {
+	public void setDoctorEducation(Set<DoctorSpeciality> doctorEducation) {
 		this.doctorEducation = doctorEducation;
 	}
 	public Set<DoctorWorkSchedule> getDoctorWorkSchedule() {
@@ -61,7 +64,7 @@ public class DoctorResource extends ResourceSupport {
 	
 	@JsonCreator
 	public DoctorResource(@JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, 
-			@JsonProperty("email") String email, @JsonProperty("doctorEducation")  Set<DoctorEducation> doctorEducation,
+			@JsonProperty("email") String email, @JsonProperty("doctorEducation")  Set<DoctorSpeciality> doctorEducation,
 			Set<DoctorWorkSchedule> doctorWorkSchedule) {
 		super();
 		
