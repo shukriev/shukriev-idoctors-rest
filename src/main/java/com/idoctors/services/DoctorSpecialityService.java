@@ -4,17 +4,16 @@
 package com.idoctors.services;
 
 import java.util.List;
-import java.util.Set;
 
 import com.idoctors.domain.DoctorSpeciality;
 
 public interface DoctorSpecialityService {
 	
-	DoctorSpeciality getDoctorEducationByDoctorId(Integer doctorId);
+	DoctorSpeciality findDoctorSpecialityByDoctorId(Integer doctorId);
 	
-	List<DoctorSpeciality> findAllDoctorEducationByDoctorId(Integer doctorId);
+	List<DoctorSpeciality> findAllDoctorSpecialityByDoctorId(Integer doctorId);
 	
-	void deleteDoctorEducationById(Integer id);
+	void deleteDoctorSpecialityById(Integer id);
 	
-	DoctorSpeciality saveDoctorEducation(DoctorSpeciality doctorEducation);
+	DoctorSpeciality saveDoctorSpeciality(DoctorSpeciality doctorSpeciality);
 }

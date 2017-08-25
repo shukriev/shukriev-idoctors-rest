@@ -22,8 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.idoctors.domain.Doctor;
 import com.idoctors.domain.DoctorSpeciality;
 import com.idoctors.resources.DoctorResource;
+import com.idoctors.resources.DoctorSpecialityResource;
 import com.idoctors.resources.assemblers.DoctorResourceAssembler;
+import com.idoctors.resources.assemblers.DoctorSpecialityResourceAssembler;
 import com.idoctors.services.DoctorService;
+import com.idoctors.services.DoctorSpecialityService;
 import com.idoctors.validation.Existing;
 import com.idoctors.validation.New;
 
@@ -32,96 +35,132 @@ import com.idoctors.validation.New;
 @ExposesResourceFor(DoctorResource.class)
 public class DoctorController {
 	private static final Logger logger = LoggerFactory.getLogger(DoctorController.class);
-	
+
 	@Autowired
 	private DoctorService doctorService;
-	
+
+	@Autowired
+	private DoctorSpecialityService doctorSpecialityService;
+
 	@Autowired
 	private DoctorResourceAssembler doctorResourceAssembler;
-		
+
+	@Autowired
+	private DoctorSpecialityResourceAssembler doctorSpecialityResourceAssembler;
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<DoctorResource>> getAllDoctors(){
-		List<DoctorResource> doctorsResource = doctorResourceAssembler.toResources(doctorService.findAllDoctors());		
+	public ResponseEntity<List<DoctorResource>> findAllDoctors() {
+		List<DoctorResource> doctorsResource = doctorResourceAssembler.toResources(doctorService.findAllDoctors());
 		return new ResponseEntity<List<DoctorResource>>(doctorsResource, HttpStatus.OK);
-	}	
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	}
+
+	@RequestMapping(value = "/{doctorId}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<DoctorResource> getDoctorById(@PathVariable Integer id){
-		Doctor doctor = doctorService.getDoctorById(id);
-		
-		if(doctor == null) {
+	public ResponseEntity<DoctorResource> getDoctorById(@PathVariable Integer doctorId) {
+		Doctor doctor = doctorService.getDoctorById(doctorId);
+
+		if (doctor == null) {
 			logger.error("Doctor does not exist");
-			
+
 			return new ResponseEntity<DoctorResource>(HttpStatus.BAD_REQUEST);
 		}
-		
+
 		DoctorResource doctorResource = doctorResourceAssembler.toResource(doctor);
-		
+
 		return new ResponseEntity<DoctorResource>(doctorResource, HttpStatus.OK);
 	}
-	 
+
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Integer> createDoctor(@Validated(New.class) @RequestBody Doctor doctor) {
 		logger.info("Create doctor with name: {}", doctor.getFirstName() + " " + doctor.getLastName());
 		Integer doctorId = doctorService.saveDoctor(doctor);
 
-		if(doctorId == null) {
+		if (doctorId == null) {
 			logger.error("Doctor cannot be created");
-			
+
 			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
-		
+
 		logger.info("Doctor with id {} has been created", doctorId);
 		return new ResponseEntity<Integer>(doctorId, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public ResponseEntity<Void> deleteDoctor(@PathVariable Integer id) {
-		logger.info("Deleting user with id: {}", id);
-		
-			if(doctorService.getDoctorById(id) == null) {
-				logger.error("Unable to delete. Docktor with id {} not found", id);
-				return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-			}
 
-		doctorService.deleteDoctorById(id);
-		
-		logger.info("Doctor with id {} has been deleted", id);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "{id}", produces = "application/json", method = RequestMethod.PUT)
+	@RequestMapping(value = "{doctorId}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<DoctorResource> updateDoctor(@PathVariable Integer id, @Validated(Existing.class) @RequestBody Doctor doctor){
-		logger.info("Update doctor with id: ", id);
-		Doctor currentDoctor = doctorService.getDoctorById(id);
-		
-		if(currentDoctor == null) {
-			logger.error("Unable to update. Doctor with id {} not found", id);
+	public ResponseEntity<Void> deleteDoctor(@PathVariable Integer doctorId) {
+		logger.info("Deleting user with id: {}", doctorId);
+
+		if (doctorService.getDoctorById(doctorId) == null) {
+			logger.error("Unable to delete. Docktor with id {} not found", doctorId);
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+
+		doctorService.deleteDoctorById(doctorId);
+
+		logger.info("Doctor with id {} has been deleted", doctorId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "{doctorId}", produces = "application/json", method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity<DoctorResource> updateDoctor(@PathVariable Integer doctorId,
+			@Validated(Existing.class) @RequestBody Doctor doctor) {
+		logger.info("Update doctor with id: ", doctorId);
+		Doctor currentDoctor = doctorService.getDoctorById(doctorId);
+
+		if (currentDoctor == null) {
+			logger.error("Unable to update. Doctor with id {} not found", doctorId);
 			return new ResponseEntity<DoctorResource>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		currentDoctor.setFirstName(doctor.getFirstName());
 		currentDoctor.setLastName(doctor.getLastName());
 		currentDoctor.setEmail(doctor.getEmail());
 		doctorService.updateDoctor(doctor);
-		
-		logger.info("Doctor with id {} has been updated", id);
+
+		logger.info("Doctor with id {} has been updated", doctorId);
 		DoctorResource doctorResource = doctorResourceAssembler.toResource(currentDoctor);
 		return new ResponseEntity<DoctorResource>(doctorResource, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "{id}/education", method =  RequestMethod.GET)
-	public ResponseEntity<List<DoctorSpeciality>> findAllDoctorEducation(@PathVariable Integer id) {
-		logger.info("Find all doctor educations");
-		List<DoctorSpeciality> doctorEducations = null;
-		return new ResponseEntity<List<DoctorSpeciality>>(doctorEducations, HttpStatus.OK);
+
+	@RequestMapping(value = "{doctorId}/speciality/{specialityId}", method = RequestMethod.GET)
+	public ResponseEntity<List<DoctorSpecialityResource>> findDoctorSpecialityById(@PathVariable Integer doctorId,
+			@PathVariable Integer specialityId) {
+		logger.info("Find doctor education by doctor id = {} and speciality id = {}", doctorId, specialityId);
+		List<DoctorSpecialityResource> doctorSpecialities = null;
+
+		// get doctors doctorSpecialities=?
+		return new ResponseEntity<List<DoctorSpecialityResource>>(doctorSpecialities, HttpStatus.OK);
 
 	}
-	
-	
+
+	@RequestMapping(value = "{doctorId}/speciality", method = RequestMethod.GET)
+	public ResponseEntity<List<DoctorSpecialityResource>> findAllDoctorSpecialitiesBydDoctorId(
+			@PathVariable Integer doctorId) {
+		logger.info("Find all doctor speciality");
+		List<DoctorSpecialityResource> doctorSpecialities = doctorSpecialityResourceAssembler
+				.toResources(doctorSpecialityService.findAllDoctorSpecialityByDoctorId(doctorId));
+
+		return new ResponseEntity<List<DoctorSpecialityResource>>(doctorSpecialities, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "{doctorId}/speciality", method = RequestMethod.POST)
+	public ResponseEntity<DoctorSpecialityResource> addDoctorSpeciality(@PathVariable Integer doctorId,
+			@RequestBody DoctorSpeciality doctorSpeciality) {
+		logger.info("Add doctor speciality on doctor with id {}", doctorId);
+
+		return null;
+	}
+
+	@RequestMapping(value = "{doctorId}/speciality/{specialityId}", method = RequestMethod.PUT)
+	public ResponseEntity<DoctorSpecialityResource> updateDoctorSpeciality(@PathVariable Integer doctorId,
+			@PathVariable Integer specialityId, @RequestBody DoctorSpeciality doctorSpeciality) {
+		logger.info("Update doctor speciality on doctor with id = {} and specialityId = {}", doctorId, specialityId);
+
+		return null;
+	}
+
 }

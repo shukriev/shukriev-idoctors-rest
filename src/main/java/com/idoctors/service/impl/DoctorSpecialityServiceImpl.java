@@ -4,7 +4,6 @@
 package com.idoctors.service.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,25 +16,25 @@ import com.idoctors.services.DoctorSpecialityService;
 public class DoctorSpecialityServiceImpl implements DoctorSpecialityService {
 
 	@Autowired
-	private DoctorSpecialityRepository doctorEducationRepository;
+	private DoctorSpecialityRepository doctorSpecialityRepository;
 
 	@Override
-	public DoctorSpeciality getDoctorEducationByDoctorId(Integer doctorId) {
-		return doctorEducationRepository.findOne(doctorId);
+	public DoctorSpeciality findDoctorSpecialityByDoctorId(Integer specialityId) {
+		return doctorSpecialityRepository.findOne(specialityId);
 	}
 
 	@Override
-	public List<DoctorSpeciality> findAllDoctorEducationByDoctorId(Integer doctorId) {
-		return doctorEducationRepository.findAllDoctorEducationByDoctorId(doctorId);
+	public List<DoctorSpeciality> findAllDoctorSpecialityByDoctorId(Integer doctorId) {
+		return doctorSpecialityRepository.findAllDoctorSpecialitiesByDoctorId(doctorId);
 	}
 
 	@Override
-	public void deleteDoctorEducationById(Integer id) {
-		doctorEducationRepository.delete(id);
+	public void deleteDoctorSpecialityById(Integer id) {
+		doctorSpecialityRepository.delete(id);
 	}
 
 	@Override
-	public DoctorSpeciality saveDoctorEducation(DoctorSpeciality doctorEducation) {
-		return doctorEducationRepository.save(doctorEducation);
+	public DoctorSpeciality saveDoctorSpeciality(DoctorSpeciality doctorSpeciality) {
+		return doctorSpecialityRepository.save(doctorSpeciality);
 	}
 }

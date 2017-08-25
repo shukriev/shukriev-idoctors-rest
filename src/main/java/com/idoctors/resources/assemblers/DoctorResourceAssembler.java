@@ -16,7 +16,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Component
 public class DoctorResourceAssembler extends ResourceAssemblerSupport<Doctor, DoctorResource>{
-	public static final String EDUCATION_REL = "education";
+	public static final String DOCTOR_SPECIALITIES_REL = "doctorSpecialities";
 
 	public DoctorResourceAssembler() {
 		super(DoctorController.class, DoctorResource.class);
@@ -27,13 +27,12 @@ public class DoctorResourceAssembler extends ResourceAssemblerSupport<Doctor, Do
 		DoctorResource doctorResource = new DoctorResource(doctor);
 		
 		Link selfLink = linkTo(methodOn(DoctorController.class).getDoctorById(doctor.getId())).withSelfRel();
-		Link doctorLink = linkTo(methodOn(DoctorController.class).getDoctorById(doctor.getId())).withRel(EDUCATION_REL);
+		Link doctorSpecialities = linkTo(methodOn(DoctorController.class).findAllDoctorSpecialitiesBydDoctorId(doctor.getId())).withRel(DOCTOR_SPECIALITIES_REL);
 		
 		doctorResource.add(selfLink);
-		doctorResource.add(doctorLink);
+		doctorResource.add(doctorSpecialities);
 		
 		return doctorResource;
 	}
-
 
 }

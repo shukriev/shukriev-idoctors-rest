@@ -48,7 +48,7 @@ public class DoctorServiceTest {
 			
 		when(doctorRepository.findAll()).thenReturn(doctorList);
 		
-		Iterable<Doctor> doctorServiceResult = doctorService.listAllDoctors();
+		Iterable<Doctor> doctorServiceResult = doctorService.findAllDoctors();
 		List<Doctor> resultDoctorList = new ArrayList<Doctor>();
 		
 		doctorServiceResult.iterator().forEachRemaining(resultDoctorList::add);

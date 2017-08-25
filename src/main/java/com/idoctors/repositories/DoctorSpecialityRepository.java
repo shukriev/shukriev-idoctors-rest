@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import com.idoctors.domain.DoctorSpeciality;
 
 public interface DoctorSpecialityRepository extends CrudRepository<DoctorSpeciality, Integer> {
-	List<DoctorSpeciality> findAllDoctorEducationByDoctorId(Integer doctorId);
+	List<DoctorSpeciality> findAllDoctorSpecialitiesByDoctorId(Integer doctorId);
 }
