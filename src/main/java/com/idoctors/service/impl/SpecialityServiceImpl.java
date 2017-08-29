@@ -12,7 +12,7 @@ public class SpecialityServiceImpl implements SpecialityService{
 	SpecialityRepository specialityRepository;
 	
 	@Override
-	public Iterable<Speciality> listAllSpecialities() {
+	public Iterable<Speciality> findAllSpecialities() {
 		return specialityRepository.findAll();
 	}
 

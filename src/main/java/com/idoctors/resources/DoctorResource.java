@@ -68,7 +68,7 @@ public class DoctorResource extends ResourceSupport {
 		setFirstName(doctor.getFirstName());
 		setLastName(doctor.getLastName());
 		setEmail(doctor.getEmail());
-		setDoctorEducation(doctor.getDoctorEducation());
+		setDoctorEducation(doctor.getDoctorSpeciality());
 	}
 
 	@JsonCreator

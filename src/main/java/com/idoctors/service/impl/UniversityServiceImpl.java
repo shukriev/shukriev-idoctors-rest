@@ -14,7 +14,7 @@ public class UniversityServiceImpl implements UniversityService {
 	private UniversityRepository repository;
 
 	@Override
-	public Iterable<University> listAllUniversities() {
+	public Iterable<University> findAllUniversities() {
 		return repository.findAll();
 	}
 

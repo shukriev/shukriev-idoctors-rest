@@ -7,7 +7,7 @@ import com.idoctors.domain.University;
 
 public interface UniversityService {
 	
-	Iterable<University> listAllUniversities();
+	Iterable<University> findAllUniversities();
 
 	University getUniversityById(Integer id);
 

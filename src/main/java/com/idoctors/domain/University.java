@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,8 +19,8 @@ public class University {
 	@Column(name="name")
 	private String name;
 	
-	@OneToOne(mappedBy = "university")
-	private DoctorSpeciality doctorEducation;
+	@OneToMany(mappedBy = "speciality")
+	private Speciality speciality;
 
 	public int getId() {
 		return id;
@@ -38,18 +38,16 @@ public class University {
 		this.name = name;
 	}
 
-	public DoctorSpeciality getDoctorEducation() {
-		return doctorEducation;
+	public Speciality getSpeciality() {
+		return speciality;
 	}
 
-	public void setDoctorEducation(DoctorSpeciality doctorEducation) {
-		this.doctorEducation = doctorEducation;
+	public void setSpeciality(Speciality speciality) {
+		this.speciality = speciality;
 	}
 
 	@Override
 	public String toString() {
-		return "University [id=" + id + ", name=" + name + ", doctorEducation=" + doctorEducation + "]";
+		return "University [id=" + id + ", name=" + name + ", doctorEducation=" + speciality + "]";
 	}
-	
-	
 }

@@ -3,6 +3,7 @@
 **/
 package com.idoctors.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -94,6 +95,7 @@ public class DoctorController {
 
 		if (doctorService.getDoctorById(doctorId) == null) {
 			logger.error("Unable to delete. Docktor with id {} not found", doctorId);
+			
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 
@@ -112,12 +114,14 @@ public class DoctorController {
 
 		if (currentDoctor == null) {
 			logger.error("Unable to update. Doctor with id {} not found", doctorId);
+			
 			return new ResponseEntity<DoctorResource>(HttpStatus.NOT_FOUND);
 		}
 
 		currentDoctor.setFirstName(doctor.getFirstName());
 		currentDoctor.setLastName(doctor.getLastName());
 		currentDoctor.setEmail(doctor.getEmail());
+		
 		doctorService.updateDoctor(doctor);
 
 		logger.info("Doctor with id {} has been updated", doctorId);
@@ -142,25 +146,31 @@ public class DoctorController {
 		logger.info("Find all doctor speciality");
 		List<DoctorSpecialityResource> doctorSpecialities = doctorSpecialityResourceAssembler
 				.toResources(doctorSpecialityService.findAllDoctorSpecialityByDoctorId(doctorId));
-
+		if(doctorSpecialities.isEmpty()) {
+			logger.error("Doctor specialities cannot be found!");
+			
+			return new ResponseEntity<List<DoctorSpecialityResource>>(new ArrayList<DoctorSpecialityResource>(), HttpStatus.OK);
+		}
+		
 		return new ResponseEntity<List<DoctorSpecialityResource>>(doctorSpecialities, HttpStatus.OK);
-
 	}
 
 	@RequestMapping(value = "{doctorId}/speciality", method = RequestMethod.POST)
-	public ResponseEntity<DoctorSpecialityResource> addDoctorSpeciality(@PathVariable Integer doctorId,
+	public DoctorSpecialityResource addDoctorSpeciality(@PathVariable Integer doctorId,
 			@RequestBody DoctorSpeciality doctorSpeciality) {
 		logger.info("Add doctor speciality on doctor with id {}", doctorId);
-
-		return null;
+		
+		return doctorSpecialityResourceAssembler.toResource(doctorSpecialityService.saveDoctorSpeciality(doctorSpeciality));
 	}
 
 	@RequestMapping(value = "{doctorId}/speciality/{specialityId}", method = RequestMethod.PUT)
-	public ResponseEntity<DoctorSpecialityResource> updateDoctorSpeciality(@PathVariable Integer doctorId,
+	public DoctorSpecialityResource updateDoctorSpeciality(@PathVariable Integer doctorId,
 			@PathVariable Integer specialityId, @RequestBody DoctorSpeciality doctorSpeciality) {
 		logger.info("Update doctor speciality on doctor with id = {} and specialityId = {}", doctorId, specialityId);
-
-		return null;
+		
+		doctorSpeciality.setId(specialityId);
+		
+		return doctorSpecialityResourceAssembler.toResource(doctorSpecialityService.saveDoctorSpeciality(doctorSpeciality));
 	}
 
 }

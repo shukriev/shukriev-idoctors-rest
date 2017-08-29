@@ -43,7 +43,7 @@ public class Doctor {
 	private String email;
 
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-	private Set<DoctorSpeciality> doctorEducation;
+	private Set<DoctorSpeciality> doctorSpeciality;
 
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
 	private Set<DoctorWorkSchedule> doctorWorkSchedule;
@@ -90,12 +90,12 @@ public class Doctor {
 		this.email = email;
 	}
 
-	public Set<DoctorSpeciality> getDoctorEducation() {
-		return doctorEducation;
+	public Set<DoctorSpeciality> getDoctorSpeciality() {
+		return doctorSpeciality;
 	}
 
-	public void setDoctorEducation(Set<DoctorSpeciality> doctorEducation) {
-		this.doctorEducation = doctorEducation;
+	public void setDoctorSpeciality(Set<DoctorSpeciality> doctorSpeciality) {
+		this.doctorSpeciality = doctorSpeciality;
 	}
 
 	public Set<DoctorWorkSchedule> getDoctorWorkSchedule() {
@@ -109,7 +109,7 @@ public class Doctor {
 	@Override
 	public String toString() {
 		return "Doctor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", doctorEducation=" + doctorEducation + ", doctorWorkSchedule=" + doctorWorkSchedule + "]";
+				+ ", doctorEducation=" + doctorSpeciality + ", doctorWorkSchedule=" + doctorWorkSchedule + "]";
 	}
 	
 	public static Builder getBuilder() {
@@ -144,8 +144,8 @@ public class Doctor {
 			return this;
 		}
 		
-		public Builder doctorEducation(Set<DoctorSpeciality> doctorEducation) {
-			doctor.setDoctorEducation(doctorEducation);
+		public Builder doctorEducation(Set<DoctorSpeciality> doctorSpeciality) {
+			doctor.setDoctorSpeciality(doctorSpeciality);
 			return this;
 		}
 		
