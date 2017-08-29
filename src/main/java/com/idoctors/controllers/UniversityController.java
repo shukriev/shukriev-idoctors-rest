@@ -107,7 +107,6 @@ public class UniversityController {
 		}
 
 		currentUniversity.setName(university.getName());
-		currentUniversity.setSpeciality(currentUniversity.getSpeciality());
 
 		universityService.saveUniversity(currentUniversity);
 		
