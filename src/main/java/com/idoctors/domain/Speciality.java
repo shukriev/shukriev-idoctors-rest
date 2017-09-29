@@ -8,9 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
+import com.idoctors.validation.Existing;
+import com.idoctors.validation.New;
 
 @Entity
 @Table(name = "speciality")
@@ -18,17 +23,18 @@ public class Speciality {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@Null(groups = New.class)
+	@NotNull(groups = Existing.class)
 	private int id;
 
 	@Column(name = "name")
+	@NotNull(message = "Speciality name is required", groups = {New.class, Existing.class})
 	private String name;
 
-	@ManyToMany(mappedBy = "doctorSpeciality")
-	private DoctorSpeciality doctorSpeciality;
-
-	@OneToMany(mappedBy = "university")
+	@ManyToOne
+	@JoinColumn(name="universityId", nullable = true)
 	private University university;
-
+	
 	public int getId() {
 		return id;
 	}
@@ -43,26 +49,11 @@ public class Speciality {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public DoctorSpeciality getDoctorSpeciality() {
-		return doctorSpeciality;
-	}
-
-	public void setDoctorSpeciality(DoctorSpeciality doctorSpeciality) {
-		this.doctorSpeciality = doctorSpeciality;
-	}
-
-	public University getUniversity() {
-		return university;
-	}
-
-	public void setUniversity(University university) {
-		this.university = university;
+		
 	}
 
 	@Override
 	public String toString() {
-		return "Speciality [id=" + this.id + ", name=" + this.name + ", university=" + this.university + ", doctorSpeciality=" + this.doctorSpeciality + "]";
+		return "Speciality [id=" + getId() + ", name=" + getName() + "]";
 	}
 }

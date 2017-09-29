@@ -3,6 +3,7 @@
 **/
 package com.idoctors.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idoctors.domain.University;
@@ -11,6 +12,7 @@ import com.idoctors.services.UniversityService;
 
 @Service
 public class UniversityServiceImpl implements UniversityService {
+	@Autowired
 	private UniversityRepository repository;
 
 	@Override

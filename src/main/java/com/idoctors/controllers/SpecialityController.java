@@ -106,7 +106,9 @@ public class SpecialityController {
 		}
 
 		currentSpeciality.setName(speciality.getName());
-		currentSpeciality.setDoctorSpeciality(speciality.getDoctorSpeciality());
+//		TODO
+//		Re-think functionality
+//		currentSpeciality.setDoctorSpeciality(speciality.getDoctorSpeciality());
 		
 		specialityService.saveSpeciality(currentSpeciality);
 		

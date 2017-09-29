@@ -20,7 +20,7 @@ public class DoctorResource extends ResourceSupport {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Set<DoctorSpeciality> doctorEducation;
+	private Set<DoctorSpeciality> doctorSpecialities;
 	private Set<DoctorWorkSchedule> doctorWorkSchedule;
 
 	public String getFirstName() {
@@ -47,12 +47,12 @@ public class DoctorResource extends ResourceSupport {
 		this.email = email;
 	}
 
-	public Set<DoctorSpeciality> getDoctorEducation() {
-		return doctorEducation;
+	public Set<DoctorSpeciality> getDoctorSpecialities() {
+		return doctorSpecialities;
 	}
 
-	public void setDoctorEducation(Set<DoctorSpeciality> doctorEducation) {
-		this.doctorEducation = doctorEducation;
+	public void setDoctorSpecialities(Set<DoctorSpeciality> doctorSpecialities) {
+		this.doctorSpecialities = doctorSpecialities;
 	}
 
 	public Set<DoctorWorkSchedule> getDoctorWorkSchedule() {
@@ -68,7 +68,7 @@ public class DoctorResource extends ResourceSupport {
 		setFirstName(doctor.getFirstName());
 		setLastName(doctor.getLastName());
 		setEmail(doctor.getEmail());
-		setDoctorEducation(doctor.getDoctorSpeciality());
+		setDoctorSpecialities(doctor.getDoctorSpecialities());
 	}
 
 	@JsonCreator
@@ -80,6 +80,6 @@ public class DoctorResource extends ResourceSupport {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setEmail(email);
-		setDoctorEducation(doctorEducation);
+		setDoctorSpecialities(doctorEducation);
 	}
 }

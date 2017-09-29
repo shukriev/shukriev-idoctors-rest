@@ -48,7 +48,6 @@ public class DoctorSpecialityResource extends ResourceSupport {
 	public DoctorSpecialityResource(DoctorSpeciality doctorSpeciality) {
 		setDoctor(doctorSpeciality.getDoctor());
 		setSpeciality(doctorSpeciality.getSpeciality());
-		setUniversity(doctorSpeciality.getUniversity());
 	}
 	
 	@JsonCreator

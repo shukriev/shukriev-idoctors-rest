@@ -3,10 +3,13 @@
 **/
 package com.idoctors.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.idoctors.domain.Speciality;
 import com.idoctors.repositories.SpecialityRepository;
 import com.idoctors.services.SpecialityService;
 
+@Service
 public class SpecialityServiceImpl implements SpecialityService{
 	
 	SpecialityRepository specialityRepository;

@@ -31,19 +31,19 @@ public class Doctor {
 	@Null(groups = New.class)
 	private Integer id;
 
-	@Column(name = "first_name")
+	@Column(name = "firstName")
 	@NotNull(message = "First name is required", groups = {New.class, Existing.class})
 	private String firstName;
 
-	@Column(name = "last_name")
+	@Column(name = "lastName")
 	private String lastName;
 
 	@Column(name = "email")
 	@NotNull(message = "Email is required", groups = {New.class, Existing.class})
 	private String email;
 
-	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-	private Set<DoctorSpeciality> doctorSpeciality;
+	@OneToMany(mappedBy = "speciality", cascade = CascadeType.ALL)
+	private Set<DoctorSpeciality> doctorSpecialities;
 
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
 	private Set<DoctorWorkSchedule> doctorWorkSchedule;
@@ -90,12 +90,12 @@ public class Doctor {
 		this.email = email;
 	}
 
-	public Set<DoctorSpeciality> getDoctorSpeciality() {
-		return doctorSpeciality;
+	public Set<DoctorSpeciality> getDoctorSpecialities() {
+		return doctorSpecialities;
 	}
 
-	public void setDoctorSpeciality(Set<DoctorSpeciality> doctorSpeciality) {
-		this.doctorSpeciality = doctorSpeciality;
+	public void setDoctorSpecialities(Set<DoctorSpeciality> doctorSpecialities) {
+		this.doctorSpecialities = doctorSpecialities;
 	}
 
 	public Set<DoctorWorkSchedule> getDoctorWorkSchedule() {
@@ -108,8 +108,8 @@ public class Doctor {
 
 	@Override
 	public String toString() {
-		return "Doctor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", doctorEducation=" + doctorSpeciality + ", doctorWorkSchedule=" + doctorWorkSchedule + "]";
+		return "Doctor [id=" + getId() + ", firstName=" + getFirstName() + ", lastName=" + getLastName() + ", email=" + getEmail()
+				+ ", doctorEducation=" + getDoctorSpecialities() + ", doctorWorkSchedule=" + getDoctorWorkSchedule() + "]";
 	}
 	
 	public static Builder getBuilder() {
@@ -124,8 +124,8 @@ public class Doctor {
 			doctor = new Doctor();
 		}
 		
-		public Builder id(Integer id) {
-			doctor.setId(id);
+		public Builder doctorId(Integer doctorId) {
+			doctor.setId(doctorId);
 			return this;
 		}
 		
@@ -144,8 +144,8 @@ public class Doctor {
 			return this;
 		}
 		
-		public Builder doctorEducation(Set<DoctorSpeciality> doctorSpeciality) {
-			doctor.setDoctorSpeciality(doctorSpeciality);
+		public Builder doctorEducation(Set<DoctorSpeciality> doctorSpecialities) {
+			doctor.setDoctorSpecialities(doctorSpecialities);
 			return this;
 		}
 		

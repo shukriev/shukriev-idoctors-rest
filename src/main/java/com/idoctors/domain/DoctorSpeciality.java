@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "doctor_speciality")
+
 public class DoctorSpeciality {
 
 	@Id
@@ -23,17 +24,14 @@ public class DoctorSpeciality {
 	@Column(name = "id")
 	private Integer id;
 
-	@ManyToOne
-	@JoinColumn(name = "doctor_id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "doctorId")
 	private Doctor doctor;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "speciality_id")
+	@JoinColumn(name = "specialityId")
 	private Speciality speciality;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "university_id")
-	private University university;
 
 	public Integer getId() {
 		return id;
@@ -59,17 +57,8 @@ public class DoctorSpeciality {
 		this.speciality = speciality;
 	}
 
-	public University getUniversity() {
-		return university;
-	}
-
-	public void setUniversity(University university) {
-		this.university = university;
-	}
-
 	@Override
 	public String toString() {
-		return "DoctorEducation [id=" + id + ", doctor=" + doctor + ", speciality=" + speciality + ", university="
-				+ university + "]";
+		return "DoctorEducation [id=" + getId() + ", doctor=" + getDoctor() + ", speciality=" + getSpeciality() + "]";
 	}
 }

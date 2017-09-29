@@ -40,8 +40,14 @@ public class UniversityController {
 		logger.info("Find all universities");
 
 		List<University> universities = new ArrayList<University>();
-		universityService.findAllUniversities().iterator().forEachRemaining(universities::add);
-
+		try {
+			universityService.findAllUniversities().iterator().forEachRemaining(universities::add);
+		} catch (NullPointerException ex) {
+			logger.error(ex.getMessage());
+			
+			return new ResponseEntity<List<University>>(HttpStatus.NOT_FOUND);
+		}
+		
 		if (universities.isEmpty()) {
 			logger.error("There is no university");
 
@@ -77,7 +83,7 @@ public class UniversityController {
 			return new ResponseEntity<University>(HttpStatus.BAD_REQUEST);
 		}
 		
-		logger.info("University with id: {} has been created", createdUniversity.getId());
+		logger.info("University with id: {} has been created", createdUniversity);
 		return new ResponseEntity<University>(createdUniversity, HttpStatus.OK);
 	}
 	
@@ -107,7 +113,9 @@ public class UniversityController {
 		}
 
 		currentUniversity.setName(university.getName());
-		currentUniversity.setSpeciality(currentUniversity.getSpeciality());
+		
+//		TODO
+//		currentUniversity.setSpecialities(university.getSpecialities());
 
 		universityService.saveUniversity(currentUniversity);
 		
