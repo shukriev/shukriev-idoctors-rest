@@ -67,7 +67,7 @@ public class SpecialityController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Speciality> createSpeciality(@Validated(New.class) @RequestBody Speciality speciality){
+	public ResponseEntity<Speciality> createSpeciality(@RequestBody Speciality speciality){
 		logger.info("Create speciality with name: {}", speciality.getName());
 		
 		Speciality createdSpeciality = specialityService.saveSpeciality(speciality);
@@ -109,7 +109,7 @@ public class SpecialityController {
 //		TODO
 //		Re-think functionality
 //		currentSpeciality.setDoctorSpeciality(speciality.getDoctorSpeciality());
-		
+
 		specialityService.saveSpeciality(currentSpeciality);
 		
 		logger.info("Speciality with id {} has been updated", specialityId);

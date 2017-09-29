@@ -34,7 +34,7 @@ public class Speciality {
 	@ManyToOne
 	@JoinColumn(name="universityId", nullable = true)
 	private University university;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -49,7 +49,6 @@ public class Speciality {
 
 	public void setName(String name) {
 		this.name = name;
-		
 	}
 
 	@Override

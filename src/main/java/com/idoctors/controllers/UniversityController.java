@@ -113,9 +113,6 @@ public class UniversityController {
 		}
 
 		currentUniversity.setName(university.getName());
-		
-//		TODO
-//		currentUniversity.setSpecialities(university.getSpecialities());
 
 		universityService.saveUniversity(currentUniversity);
 		
