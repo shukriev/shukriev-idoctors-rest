@@ -113,7 +113,8 @@ public class UniversityController {
 		}
 
 		currentUniversity.setName(university.getName());
-
+		currentUniversity.setSpecialities(university.getSpecialities());
+		
 		universityService.saveUniversity(currentUniversity);
 		
 		logger.info("University with id {} has been updated", universityId);

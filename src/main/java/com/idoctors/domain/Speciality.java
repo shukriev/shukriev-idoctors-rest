@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
@@ -23,23 +24,24 @@ public class Speciality {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	@Null(groups = New.class)
 	@NotNull(groups = Existing.class)
-	private int id;
+	@Null(groups = New.class)
+	private Integer id;
 
 	@Column(name = "name")
 	@NotNull(message = "Speciality name is required", groups = {New.class, Existing.class})
 	private String name;
+	
+//	@ManyToOne
+//	@JoinColumn(name="universityId", nullable = true)
+//	@Null(groups = {New.class, Existing.class})
+//	private University university;
 
-	@ManyToOne
-	@JoinColumn(name="universityId", nullable = true)
-	private University university;
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -50,6 +52,14 @@ public class Speciality {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+//	public University getUniversity() {
+//		return university;
+//	}
+//
+//	public void setUniversity(University university) {
+//		this.university = university;
+//	}
 
 	@Override
 	public String toString() {

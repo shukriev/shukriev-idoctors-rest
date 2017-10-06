@@ -3,6 +3,7 @@
 **/
 package com.idoctors.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idoctors.domain.Speciality;
@@ -11,7 +12,7 @@ import com.idoctors.services.SpecialityService;
 
 @Service
 public class SpecialityServiceImpl implements SpecialityService{
-	
+	@Autowired
 	SpecialityRepository specialityRepository;
 	
 	@Override

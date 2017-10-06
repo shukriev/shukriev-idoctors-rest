@@ -40,8 +40,15 @@ public class SpecialityController {
 		logger.info("Find all specialities");
 
 		List<Speciality> specialities = new ArrayList<Speciality>();
-		specialityService.findAllSpecialities().iterator().forEachRemaining(specialities::add);
+		try {
+			specialityService.findAllSpecialities().iterator().forEachRemaining(specialities::add);
+			
+		} catch (NullPointerException ex) {
+			logger.error("There is no speciality");
 
+			return new ResponseEntity<List<Speciality>>(HttpStatus.NOT_FOUND);			
+		}
+		
 		if (specialities.isEmpty()) {
 			logger.error("There is no speciality");
 
@@ -67,7 +74,7 @@ public class SpecialityController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Speciality> createSpeciality(@RequestBody Speciality speciality){
+	public ResponseEntity<Speciality> createSpeciality(@Validated(New.class) @RequestBody Speciality speciality){
 		logger.info("Create speciality with name: {}", speciality.getName());
 		
 		Speciality createdSpeciality = specialityService.saveSpeciality(speciality);
