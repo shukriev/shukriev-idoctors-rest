@@ -85,6 +85,7 @@ public class SpecialityController {
 		}
 		
 		logger.info("Speciality with id: {} has been created", createdSpeciality.getId());
+		
 		return new ResponseEntity<Speciality>(createdSpeciality, HttpStatus.OK);
 	}
 	
@@ -96,6 +97,7 @@ public class SpecialityController {
 			
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
+		
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
@@ -113,9 +115,6 @@ public class SpecialityController {
 		}
 
 		currentSpeciality.setName(speciality.getName());
-//		TODO
-//		Re-think functionality
-//		currentSpeciality.setDoctorSpeciality(speciality.getDoctorSpeciality());
 
 		specialityService.saveSpeciality(currentSpeciality);
 		

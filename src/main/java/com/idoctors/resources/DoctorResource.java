@@ -16,7 +16,6 @@ import com.idoctors.domain.DoctorWorkSchedule;
 
 @Relation(value = "doctor", collectionRelation = "doctors")
 public class DoctorResource extends ResourceSupport {
-	// Id is skipped, because it comes from ResourceSupport class as a Link
 	private String firstName;
 	private String lastName;
 	private String email;

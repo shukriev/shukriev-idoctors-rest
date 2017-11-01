@@ -16,7 +16,7 @@ public class HospitalServiceImpl implements HospitalService {
 	private HospitalRepository repository;
 
 	@Override
-	public Iterable<Hospital> listAllHospitals() {
+	public Iterable<Hospital> findAllHospitals() {
 		return repository.findAll();
 	}
 
@@ -28,5 +28,10 @@ public class HospitalServiceImpl implements HospitalService {
 	@Override
 	public Hospital saveHospital(Hospital hospital) {
 		return repository.save(hospital);
+	}
+
+	@Override
+	public void deleteHospital(Integer id) {
+		repository.delete(id);
 	}
 }

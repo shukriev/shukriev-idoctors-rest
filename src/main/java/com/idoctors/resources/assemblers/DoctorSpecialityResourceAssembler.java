@@ -16,8 +16,7 @@ import org.springframework.hateoas.Link;
 
 @Component
 public class DoctorSpecialityResourceAssembler extends ResourceAssemblerSupport<DoctorSpeciality, DoctorSpecialityResource>{
-	public static final String DOCTOR_REL = "doctor";
-	
+
 	public DoctorSpecialityResourceAssembler() {
 		super(DoctorSpeciality.class, DoctorSpecialityResource.class);
 	}
@@ -27,10 +26,8 @@ public class DoctorSpecialityResourceAssembler extends ResourceAssemblerSupport<
 		DoctorSpecialityResource doctorSpecialityReource = new DoctorSpecialityResource(doctorSpeciality);
 		
 		Link selfLink = linkTo(methodOn(DoctorController.class).findDoctorSpecialityById(doctorSpeciality.getDoctor().getId(), doctorSpeciality.getSpeciality().getId())).withSelfRel();
-		Link doctorLink = linkTo(methodOn(DoctorController.class).getDoctorById(doctorSpeciality.getDoctor().getId())).withRel(DOCTOR_REL);
 		
 		doctorSpecialityReource.add(selfLink);
-		doctorSpecialityReource.add(doctorLink);
 		
 		return doctorSpecialityReource;
 	}

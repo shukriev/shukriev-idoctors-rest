@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.idoctors.domain.University;
+import com.idoctors.resources.UniversityResource;
+import com.idoctors.resources.assemblers.UniversityResourceAssembler;
 import com.idoctors.services.UniversityService;
 import com.idoctors.validation.Existing;
 import com.idoctors.validation.New;
@@ -29,14 +31,18 @@ import com.idoctors.validation.New;
 @RequestMapping(value = "/university", produces = "application/hal+json")
 @ExposesResourceFor(UniversityController.class)
 public class UniversityController {
+	
 	private static final Logger logger = LoggerFactory.getLogger(UniversityController.class);
 
 	@Autowired
 	private UniversityService universityService;
 
+	@Autowired
+	UniversityResourceAssembler universityResourceAssembler;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<University>> findAllUniversities() {
+	public ResponseEntity<List<UniversityResource>> findAllUniversities() {
 		logger.info("Find all universities");
 
 		List<University> universities = new ArrayList<University>();
@@ -45,46 +51,47 @@ public class UniversityController {
 		} catch (NullPointerException ex) {
 			logger.error(ex.getMessage());
 			
-			return new ResponseEntity<List<University>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<UniversityResource>>(HttpStatus.NOT_FOUND);
 		}
 		
 		if (universities.isEmpty()) {
 			logger.error("There is no university");
 
-			return new ResponseEntity<List<University>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<UniversityResource>>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<List<University>>(universities, HttpStatus.OK);
+		return new ResponseEntity<List<UniversityResource>>(universityResourceAssembler.toResources(universities), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{universityId}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<University> getUniversityById(@PathVariable Integer universityId) {
+	public ResponseEntity<UniversityResource> getUniversityById(@PathVariable Integer universityId) {
 		logger.info("Find university by id: {}", universityId);
 
 		University university = universityService.getUniversityById(universityId);
 
 		if (university == null) {
-			return new ResponseEntity<University>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<UniversityResource>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<University>(university, HttpStatus.OK);
+		return new ResponseEntity<UniversityResource>(universityResourceAssembler.toResource(university), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<University> createUniversity(@Validated(New.class) @RequestBody University university){
+	public ResponseEntity<UniversityResource> createUniversity(@Validated(New.class) @RequestBody University university){
 		logger.info("Create university with name: {}", university.getName());
 		
 		University createdUniversity = universityService.saveUniversity(university);
+		
 		if(createdUniversity == null) {
 			logger.error("University cannot be created");
 			
-			return new ResponseEntity<University>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<UniversityResource>(HttpStatus.BAD_REQUEST);
 		}
 		
 		logger.info("University with id: {} has been created", createdUniversity);
-		return new ResponseEntity<University>(createdUniversity, HttpStatus.OK);
+		return new ResponseEntity<UniversityResource>(universityResourceAssembler.toResource(createdUniversity), HttpStatus.OK);
 	}
 	
 	public ResponseEntity<Void> deleteUniversity(@PathVariable Integer universityId) {
@@ -100,7 +107,7 @@ public class UniversityController {
 	
 	@RequestMapping(value = "{universityId}", produces = "application/json", method = RequestMethod.PUT)
 	@ResponseBody
-	public ResponseEntity<University> updateUniversity(@PathVariable Integer universityId,
+	public ResponseEntity<UniversityResource> updateUniversity(@PathVariable Integer universityId,
 			@Validated(Existing.class) @RequestBody University university) {
 		logger.info("Update university with id: ", universityId);
 		
@@ -109,7 +116,7 @@ public class UniversityController {
 		if (currentUniversity == null) {
 			logger.error("Unable to update. University with id {} not found", universityId);
 			
-			return new ResponseEntity<University>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<UniversityResource>(HttpStatus.NOT_FOUND);
 		}
 
 		currentUniversity.setName(university.getName());
@@ -119,7 +126,7 @@ public class UniversityController {
 		
 		logger.info("University with id {} has been updated", universityId);
 		
-		return new ResponseEntity<University>(currentUniversity, HttpStatus.OK);
+		return new ResponseEntity<UniversityResource>(universityResourceAssembler.toResource(currentUniversity), HttpStatus.OK);
 	}
 
 }

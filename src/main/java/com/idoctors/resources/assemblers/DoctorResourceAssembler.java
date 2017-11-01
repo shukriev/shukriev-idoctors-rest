@@ -27,7 +27,7 @@ public class DoctorResourceAssembler extends ResourceAssemblerSupport<Doctor, Do
 		DoctorResource doctorResource = new DoctorResource(doctor);
 		
 		Link selfLink = linkTo(methodOn(DoctorController.class).getDoctorById(doctor.getId())).withSelfRel();
-		Link doctorSpecialities = linkTo(methodOn(DoctorController.class).findAllDoctorSpecialitiesBydDoctorId(doctor.getId())).withRel(DOCTOR_SPECIALITIES_REL);
+		Link doctorSpecialities = linkTo(methodOn(DoctorController.class).findAllDoctorSpecialitiesByDoctorId(doctor.getId())).withRel(DOCTOR_SPECIALITIES_REL);
 		
 		doctorResource.add(selfLink);
 		doctorResource.add(doctorSpecialities);

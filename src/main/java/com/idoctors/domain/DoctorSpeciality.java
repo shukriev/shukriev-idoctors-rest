@@ -11,8 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "doctor_speciality")
@@ -24,14 +25,15 @@ public class DoctorSpeciality {
 	@Column(name = "id")
 	private Integer id;
 
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "doctorId")
+	@JoinColumn(name = "doctorId", referencedColumnName = "id")
 	private Doctor doctor;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "specialityId")
+//	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "specialityId", referencedColumnName = "id")
 	private Speciality speciality;
-
 
 	public Integer getId() {
 		return id;

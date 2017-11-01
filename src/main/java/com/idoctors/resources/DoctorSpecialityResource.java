@@ -15,7 +15,7 @@ import com.idoctors.domain.University;
 
 @Relation(value = "doctorSpeciality", collectionRelation = "doctorSpecialities")
 public class DoctorSpecialityResource extends ResourceSupport {
-	//Id is skipped
+
 	private Doctor doctor;
 	private Speciality speciality;
 	private University university;

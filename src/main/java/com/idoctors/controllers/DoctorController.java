@@ -22,23 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.idoctors.domain.Doctor;
 import com.idoctors.domain.DoctorSpeciality;
+import com.idoctors.domain.Speciality;
 import com.idoctors.resources.DoctorResource;
 import com.idoctors.resources.DoctorSpecialityResource;
 import com.idoctors.resources.assemblers.DoctorResourceAssembler;
 import com.idoctors.resources.assemblers.DoctorSpecialityResourceAssembler;
 import com.idoctors.services.DoctorService;
 import com.idoctors.services.DoctorSpecialityService;
+import com.idoctors.services.SpecialityService;
 import com.idoctors.validation.Existing;
 import com.idoctors.validation.New;
 
 @RestController
-@RequestMapping(value = "/doctor", produces = "application/hal+json")
 @ExposesResourceFor(DoctorResource.class)
+@RequestMapping(value = "/doctor", produces = "application/hal+json")
 public class DoctorController {
 	private static final Logger logger = LoggerFactory.getLogger(DoctorController.class);
 
 	@Autowired
 	private DoctorService doctorService;
+	
+	@Autowired
+	private SpecialityService specialityService;
 
 	@Autowired
 	private DoctorSpecialityService doctorSpecialityService;
@@ -52,6 +57,23 @@ public class DoctorController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<DoctorResource>> findAllDoctors() {
+		logger.info("Find all doctors");
+
+		List<Doctor> doctors = new ArrayList<Doctor>();
+		try {
+			doctorService.findAllDoctors().iterator().forEachRemaining(doctors::add);
+		} catch (NullPointerException ex) {
+			logger.error(ex.getMessage());
+			
+			return new ResponseEntity<List<DoctorResource>>(HttpStatus.NOT_FOUND);
+		}
+		
+		if (doctors.isEmpty()) {
+			logger.error("There is no doctors");
+
+			return new ResponseEntity<List<DoctorResource>>(HttpStatus.NOT_FOUND);
+		}		
+		
 		List<DoctorResource> doctorsResource = doctorResourceAssembler.toResources(doctorService.findAllDoctors());
 		return new ResponseEntity<List<DoctorResource>>(doctorsResource, HttpStatus.OK);
 	}
@@ -141,11 +163,12 @@ public class DoctorController {
 	}
 
 	@RequestMapping(value = "{doctorId}/speciality", method = RequestMethod.GET)
-	public ResponseEntity<List<DoctorSpecialityResource>> findAllDoctorSpecialitiesBydDoctorId(
+	public ResponseEntity<List<DoctorSpecialityResource>> findAllDoctorSpecialitiesByDoctorId(
 			@PathVariable Integer doctorId) {
 		logger.info("Find all doctor speciality");
 		List<DoctorSpecialityResource> doctorSpecialities = doctorSpecialityResourceAssembler
 				.toResources(doctorSpecialityService.findAllDoctorSpecialityByDoctorId(doctorId));
+		
 		if(doctorSpecialities.isEmpty()) {
 			logger.error("Doctor specialities cannot be found!");
 			
@@ -156,21 +179,16 @@ public class DoctorController {
 	}
 
 	@RequestMapping(value = "{doctorId}/speciality", method = RequestMethod.POST)
-	public DoctorSpecialityResource addDoctorSpeciality(@PathVariable Integer doctorId,
+	public ResponseEntity<DoctorSpecialityResource> addDoctorSpeciality(@PathVariable Integer doctorId,
 			@RequestBody DoctorSpeciality doctorSpeciality) {
 		logger.info("Add doctor speciality on doctor with id {}", doctorId);
 		
-		return doctorSpecialityResourceAssembler.toResource(doctorSpecialityService.saveDoctorSpeciality(doctorSpeciality));
-	}
-
-	@RequestMapping(value = "{doctorId}/speciality/{specialityId}", method = RequestMethod.PUT)
-	public DoctorSpecialityResource updateDoctorSpeciality(@PathVariable Integer doctorId,
-			@PathVariable Integer specialityId, @RequestBody DoctorSpeciality doctorSpeciality) {
-		logger.info("Update doctor speciality on doctor with id = {} and specialityId = {}", doctorId, specialityId);
+		Doctor currentDoctor = doctorService.getDoctorById(doctorId);
+		Speciality currentSpeciality = specialityService.getSpecialityById(doctorSpeciality.getSpeciality().getId());
 		
-		doctorSpeciality.setId(specialityId);
+		doctorSpeciality.setSpeciality(currentSpeciality);
+		doctorSpeciality.setDoctor(currentDoctor);
 		
-		return doctorSpecialityResourceAssembler.toResource(doctorSpecialityService.saveDoctorSpeciality(doctorSpeciality));
+		return new ResponseEntity<DoctorSpecialityResource>(doctorSpecialityResourceAssembler.toResource(doctorSpecialityService.saveDoctorSpeciality(doctorSpeciality)), HttpStatus.OK);
 	}
-
 }

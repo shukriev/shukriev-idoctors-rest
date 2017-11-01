@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.idoctors.validation.Existing;
 import com.idoctors.validation.New;
 
@@ -42,9 +45,11 @@ public class Doctor {
 	@NotNull(message = "Email is required", groups = {New.class, Existing.class})
 	private String email;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "speciality", cascade = CascadeType.ALL)
 	private Set<DoctorSpeciality> doctorSpecialities;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
 	private Set<DoctorWorkSchedule> doctorWorkSchedule;
 
